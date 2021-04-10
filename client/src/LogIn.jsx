@@ -15,7 +15,7 @@ function LogIn() {
     if (userEmail === "" || userPassword === "") {
       alert("There is empty input box. Please fill in.");
     } else {
-      Axios.post("http://localhost:8001/login", {
+      Axios.post("https://yongjuleehome.ga/4537/termproject/API/V1/login", {
         email: userEmail,
         password: userPassword,
       }).then((response) => {

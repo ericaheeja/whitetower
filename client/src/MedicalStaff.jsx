@@ -21,7 +21,7 @@ function MedicalStaff() {
 
   useEffect(() => {
     const getPatient = () => {
-      Axios.get("http://localhost:8001/patientList").then((response) => {
+      Axios.get("https://yongjuleehome.ga/4537/termproject/API/V1/patientList").then((response) => {
         setPatientList(response.data);
         console.log(response.data);
       });
@@ -39,7 +39,7 @@ function MedicalStaff() {
     } else if (patientState === 1) {
       alert("This patient already has been scheduled  ");
     } else {
-      Axios.put("http://localhost:8001/updateReserved", {
+      Axios.put("https://yongjuleehome.ga/4537/termproject/API/V1/updateReserved", {
         patientID: patientID,
         name: name,
         position: position,
@@ -49,7 +49,7 @@ function MedicalStaff() {
       }).then((response) => {
         console.log(response);
         console.log("line55");
-        Axios.post("http://localhost:8001/post/medicalStaff", {
+        Axios.post("https://yongjuleehome.ga/4537/termproject/API/V1/post/medicalStaff", {
           name: name,
           position: position,
 
@@ -75,7 +75,7 @@ function MedicalStaff() {
     } else if (patientState === 1) {
       alert("This patient already has been scheduled  ");
     } else {
-      Axios.put("http://localhost:8001/put/medicalStaff", {
+      Axios.put("https://yongjuleehome.ga/4537/termproject/API/V1/put/medicalStaff", {
         name: name,
         position: position,
         startTime: startTime,
@@ -91,7 +91,7 @@ function MedicalStaff() {
   };
 
   const GetMedicalStaff = () => {
-    Axios.get("http://localhost:8001/get/medicalStaff", {
+    Axios.get("https://yongjuleehome.ga/4537/termproject/API/V1/get/medicalStaff", {
       name: name,
       position: position,
       startTime: startTime,
@@ -108,13 +108,13 @@ function MedicalStaff() {
   const DeleteMedicalStaff = () => {
     console.log("line107");
 
-    Axios.put("http://localhost:8001/updateNotReserved", {
+    Axios.put("https://yongjuleehome.ga/4537/termproject/API/V1/updateNotReserved", {
       patientID: patientID,
     }).then((response) => {
       console.log(response);
       console.log("line 108 delete");
 
-      Axios.delete("http://localhost:8001/delete/medicalStaff", {
+      Axios.delete("https://yongjuleehome.ga/4537/termproject/API/V1/delete/medicalStaff", {
         data: {
           updateNum: updateNum,
         },

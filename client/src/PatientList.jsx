@@ -21,7 +21,7 @@ function PatientList() {
   const [newTime, setNewTime] = useState("");
 
   const getPatient = () => {
-    Axios.get("http://localhost:8001/patientList").then((response) => {
+    Axios.get("https://yongjuleehome.ga/4537/termproject/API/V1/patientList").then((response) => {
       setPatientList(response.data);
     });
   };
@@ -37,7 +37,7 @@ function PatientList() {
     ) {
       alert("Please fill in!");
     } else {
-      Axios.post("http://localhost:8001/createPatient", {
+      Axios.post("https://yongjuleehome.ga/4537/termproject/API/V1/createPatient", {
         name: name,
         city: city,
         mobile: mobile,
@@ -72,7 +72,7 @@ function PatientList() {
     ) {
       alert("Please fill in!");
     } else {
-      Axios.put("http://localhost:8001/updatePatient/", {
+      Axios.put("https://yongjuleehome.ga/4537/termproject/API/V1/updatePatient/", {
         name: newName,
         city: newCity,
         mobile: newMobile,
@@ -103,13 +103,15 @@ function PatientList() {
 
   const removePatient = (ID) => {
     console.log(ID);
-    Axios.delete(`http://localhost:8001/deletePatient/${ID}`).then((response) => {
-      setPatientList(
-        patientList.filter((val) => {
-          return val.ID !== ID;
-        })
-      );
-    });
+    Axios.delete(`https://yongjuleehome.ga/4537/termproject/API/V1/deletePatient/${ID}`).then(
+      (response) => {
+        setPatientList(
+          patientList.filter((val) => {
+            return val.ID !== ID;
+          })
+        );
+      }
+    );
   };
 
   return (
