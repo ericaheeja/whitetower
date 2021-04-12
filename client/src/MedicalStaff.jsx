@@ -21,6 +21,7 @@ function MedicalStaff() {
   // const [userEmail, setUserEmail] = useState("");
 
   let endPoint = "https://heejaerica.online/4537/termproject/API/V1/";
+
   useEffect(() => {
     const getPatient = () => {
       Axios.get(endPoint + "patientList/").then((response) => {
@@ -103,12 +104,11 @@ function MedicalStaff() {
           endDate: endDate,
           endTime: endTime,
           patientID: patientID,
-        }).then((response) => {
-          console.log(response);
+          // }).then((response) => {
+          //   console.log(response);
           // GetMedicalStaff();
-          window.location.reload(false);
         });
-        // window.location.reload(false);
+        window.location.reload(false);
       });
     }
   };
@@ -169,11 +169,12 @@ function MedicalStaff() {
         data: {
           updateNum: updateNum,
         },
-      }).then((response) => {
-        console.log(response);
-        window.location.reload(false);
+        // }).then((response) => {
+        //   console.log(response);
+        //   window.location.reload(false);
         // GetMedicalStaff();
       });
+      window.location.reload(false);
     });
   };
 
