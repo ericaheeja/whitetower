@@ -48,6 +48,22 @@ function MedicalStaff() {
   //   });
   // };
 
+  const GetMedicalStaff = async () => {
+    await Axios.get(endPoint + "get/medicalStaff/", {
+      // name: name,
+      // position: position,
+      // startTime: startTime,
+      // endDate: endDate,
+      // endTime: endTime,
+      // patientID: patientID,
+    }).then(async (response) => {
+      addCountRequest("getMedicalStaff");
+      // console.log(response.data);
+      // console.log(response.data[0].start_at);
+      await setList(response.data);
+    });
+  };
+
   const addCountRequest = (apiAddress) => {
     console.log(localStorage.getItem("email"));
     Axios.post(endPoint + "addCountRequest/", {
@@ -108,7 +124,8 @@ function MedicalStaff() {
           //   console.log(response);
           // GetMedicalStaff();
         });
-        window.location.reload(false);
+        GetMedicalStaff();
+        // window.location.reload(false);
       });
     }
   };
@@ -140,21 +157,21 @@ function MedicalStaff() {
     }
   };
 
-  const GetMedicalStaff = () => {
-    Axios.get(endPoint + "get/medicalStaff/", {
-      // name: name,
-      // position: position,
-      // startTime: startTime,
-      // endDate: endDate,
-      // endTime: endTime,
-      // patientID: patientID,
-    }).then((response) => {
-      addCountRequest("getMedicalStaff");
-      // console.log(response.data);
-      // console.log(response.data[0].start_at);
-      setList(response.data);
-    });
-  };
+  // const GetMedicalStaff = async () => {
+  //   await Axios.get(endPoint + "get/medicalStaff/", {
+  //     // name: name,
+  //     // position: position,
+  //     // startTime: startTime,
+  //     // endDate: endDate,
+  //     // endTime: endTime,
+  //     // patientID: patientID,
+  //   }).then(async (response) => {
+  //     addCountRequest("getMedicalStaff");
+  //     // console.log(response.data);
+  //     // console.log(response.data[0].start_at);
+  //     await setList(response.data);
+  //   });
+  // };
 
   const DeleteMedicalStaff = async (patientID, updateNum) => {
     // console.log("line107");
@@ -174,7 +191,8 @@ function MedicalStaff() {
         //   window.location.reload(false);
         // GetMedicalStaff();
       });
-      window.location.reload(false);
+      // window.location.reload(false);
+      GetMedicalStaff();
     });
   };
 
