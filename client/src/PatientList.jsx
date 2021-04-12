@@ -20,8 +20,20 @@ function PatientList() {
   const [newDate, setNewDate] = useState("");
   const [newTime, setNewTime] = useState("");
 
+  let endPoint = "https://heejaerica.online/4537/termproject/API/V1/";
+  const addCountRequest = (apiAddress) => {
+    console.log(localStorage.getItem("email"));
+    Axios.post(endPoint + "addCountRequest", {
+      apiAddress: apiAddress,
+      userEmail: localStorage.getItem("email"),
+    }).then((response) => {
+      console.log(response);
+    });
+  };
+
   const getPatient = () => {
-    Axios.get("https://yongjuleehome.ga/4537/termproject/API/V1/patientList").then((response) => {
+    addCountRequest("patientList");
+    Axios.get(endPoint + "patientList").then((response) => {
       setPatientList(response.data);
     });
   };
@@ -37,7 +49,8 @@ function PatientList() {
     ) {
       alert("Please fill in!");
     } else {
-      Axios.post("https://yongjuleehome.ga/4537/termproject/API/V1/createPatient", {
+      addCountRequest("createPatient");
+      Axios.post(endPoint + "createPatient", {
         name: name,
         city: city,
         mobile: mobile,
@@ -57,7 +70,7 @@ function PatientList() {
           },
         ]);
       });
-      window.location.reload(false);
+      // window.location.reload(false);
     }
   };
 
@@ -72,7 +85,8 @@ function PatientList() {
     ) {
       alert("Please fill in!");
     } else {
-      Axios.put("https://yongjuleehome.ga/4537/termproject/API/V1/updatePatient/", {
+      addCountRequest("updatePatient");
+      Axios.put(endPoint + "updatePatient/", {
         name: newName,
         city: newCity,
         mobile: newMobile,
@@ -97,21 +111,21 @@ function PatientList() {
               : val;
           })
         );
+        // window.location.reload(false);
       });
     }
   };
 
   const removePatient = (ID) => {
     console.log(ID);
-    Axios.delete(`https://yongjuleehome.ga/4537/termproject/API/V1/deletePatient/${ID}`).then(
-      (response) => {
-        setPatientList(
-          patientList.filter((val) => {
-            return val.ID !== ID;
-          })
-        );
-      }
-    );
+    addCountRequest("deletePatient");
+    Axios.delete(endPoint + `deletePatient/${ID}`).then((response) => {
+      setPatientList(
+        patientList.filter((val) => {
+          return val.ID !== ID;
+        })
+      );
+    });
   };
 
   return (

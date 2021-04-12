@@ -38,6 +38,10 @@ const Header = () => {
             <LinkContainer to="/MedicalStaff">
               <Button variant="dark">Medical Staff</Button>
             </LinkContainer>
+
+            <LinkContainer to="/Admin">
+              <Button variant="dark">Admin</Button>
+            </LinkContainer>
             <Button variant="dark" onClick={onLogout}>
               Log Out
             </Button>

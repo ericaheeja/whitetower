@@ -12,34 +12,80 @@ function MedicalStaff() {
   const [startTime, setStartTime] = useState("");
   const [endDate, setEndDate] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [updateNum, setUpdateNum] = useState("");
+  // const [updateNum, setUpdateNum] = useState("");
   const [list, setList] = useState([]);
   const [patientList, setPatientList] = useState([]);
   const [selectedPatient, setselectedPatient] = useState("");
   const [patientID, setPatientId] = useState("");
   const [patientState, setPatientState] = useState("");
+  // const [userEmail, setUserEmail] = useState("");
 
+  let endPoint = "https://heejaerica.online/4537/termproject/API/V1/";
   useEffect(() => {
     const getPatient = () => {
-      Axios.get("https://yongjuleehome.ga/4537/termproject/API/V1/patientList").then((response) => {
+      Axios.get(endPoint + "patientList/").then((response) => {
         setPatientList(response.data);
         console.log(response.data);
       });
     };
     getPatient();
+    GetMedicalStaff();
+    // getUserEmail();
+    // insertUserId();
   }, []);
+
+  // const getUserEmail = () => {
+  //   // console.log(localStorage.getItem("token"));
+
+  //   Axios.get("http://localhost:8001/authUser", {
+  //     headers: {
+  //       "x-access-token": localStorage.getItem("token"),
+  //     },
+  //   }).then((response) => {
+  //     console.log(response.data);
+  //     setUserEmail(response.data);
+  //   });
+  // };
+
+  const addCountRequest = (apiAddress) => {
+    console.log(localStorage.getItem("email"));
+    Axios.post(endPoint + "addCountRequest/", {
+      apiAddress: apiAddress,
+      userEmail: localStorage.getItem("email"),
+    }).then((response) => {
+      console.log(response);
+    });
+  };
+
+  // const insertUserId = () => {
+  //   // console.log(userEmail)
+  //   Axios.post("http://localhost:8001/insertUserId", {
+  //     userEmail: localStorage.getItem("email"),
+  //   }).then((response) => {
+  //     console.log(response);
+  //   });
+  // };
 
   const RegisterRequest = () => {
     console.log(startTime.split(" ")[1]);
     console.log(endDate + " " + endTime);
-    if (name === "" || position === "" || endDate === "" || endTime === "") {
+
+    if (
+      name === "" ||
+      position === "" ||
+      startTime === "" ||
+      endDate === "" ||
+      endTime === "" ||
+      selectedPatient === ""
+    ) {
       alert("please type empty section");
     } else if (startTime > endDate + " " + endTime) {
       alert("Your end time is forward than your start time");
     } else if (patientState === 1) {
       alert("This patient already has been scheduled  ");
     } else {
-      Axios.put("https://yongjuleehome.ga/4537/termproject/API/V1/updateReserved", {
+      addCountRequest("updateReserved");
+      Axios.put(endPoint + "updateReserved/", {
         patientID: patientID,
         name: name,
         position: position,
@@ -47,79 +93,85 @@ function MedicalStaff() {
         endDate: endDate,
         endTime: endTime,
       }).then((response) => {
-        console.log(response);
-        console.log("line55");
-        Axios.post("https://yongjuleehome.ga/4537/termproject/API/V1/post/medicalStaff", {
+        // console.log(response);
+        // console.log("line55");
+        addCountRequest("postMedicalStaff");
+        Axios.post(endPoint + "post/medicalStaff/", {
           name: name,
           position: position,
-
           startTime: startTime,
           endDate: endDate,
           endTime: endTime,
           patientID: patientID,
         }).then((response) => {
           console.log(response);
+          GetMedicalStaff();
         });
+        // window.location.reload(false);
       });
-
-      window.location.reload(false);
-      GetMedicalStaff();
     }
   };
 
-  const UpdateMedicalStaff = () => {
+  const UpdateMedicalStaff = (Id, startDate, patientID) => {
+    // console.log(startDate);
     if (name === "" || position === "" || endDate === "" || endTime === "") {
       alert("please type empty section");
     } else if (startTime > endDate + " " + endTime) {
       alert("Your end time is forward than your start time");
-    } else if (patientState === 1) {
-      alert("This patient already has been scheduled  ");
-    } else {
-      Axios.put("https://yongjuleehome.ga/4537/termproject/API/V1/put/medicalStaff", {
+    }
+    // else if (patientState === 1) {
+    //   alert("This patient already has been scheduled  ");}
+    else {
+      addCountRequest("putMedicalStaff");
+      Axios.put(endPoint + "put/medicalStaff/", {
         name: name,
         position: position,
-        startTime: startTime,
+        startTime: startDate,
         endDate: endDate,
         endTime: endTime,
-        updateNum: updateNum,
+        updateNum: Id,
         patientID: patientID,
       }).then((response) => {
         console.log(response);
+        // window.location.reload(false);
+        GetMedicalStaff();
       });
-      // GetMedicalStaff()
     }
   };
 
   const GetMedicalStaff = () => {
-    Axios.get("https://yongjuleehome.ga/4537/termproject/API/V1/get/medicalStaff", {
-      name: name,
-      position: position,
-      startTime: startTime,
-      endDate: endDate,
-      endTime: endTime,
-      patientID: patientID,
+    Axios.get(endPoint + "get/medicalStaff/", {
+      // name: name,
+      // position: position,
+      // startTime: startTime,
+      // endDate: endDate,
+      // endTime: endTime,
+      // patientID: patientID,
     }).then((response) => {
-      console.log(response.data);
-      console.log(response.data[0].start_at);
+      addCountRequest("getMedicalStaff");
+      // console.log(response.data);
+      // console.log(response.data[0].start_at);
       setList(response.data);
     });
   };
 
-  const DeleteMedicalStaff = () => {
-    console.log("line107");
-
-    Axios.put("https://yongjuleehome.ga/4537/termproject/API/V1/updateNotReserved", {
+  const DeleteMedicalStaff = (patientID, updateNum) => {
+    // console.log("line107");
+    addCountRequest("updateNotReserved");
+    Axios.put(endPoint + "updateNotReserved/", {
       patientID: patientID,
     }).then((response) => {
-      console.log(response);
-      console.log("line 108 delete");
-
-      Axios.delete("https://yongjuleehome.ga/4537/termproject/API/V1/delete/medicalStaff", {
+      // console.log(response);
+      // console.log("line 108 delete");
+      addCountRequest("deletePati");
+      Axios.delete(endPoint + "delete/medicalStaff/", {
         data: {
           updateNum: updateNum,
         },
       }).then((response) => {
         console.log(response);
+        // window.location.reload(false);
+        GetMedicalStaff();
       });
     });
   };
@@ -166,12 +218,18 @@ function MedicalStaff() {
                     <Dropdown>
                       <span>Select patient: </span>
 
-                      <Dropdown.Toggle variant="success btn-sm" id="dropdown-basic">
+                      <Dropdown.Toggle
+                        variant="success btn-sm"
+                        id="dropdown-basic"
+                      >
                         Patient Id
                       </Dropdown.Toggle>
                       <br />
 
-                      <Dropdown.Menu variant="secondary btn-sm" id="dropdown-basic">
+                      <Dropdown.Menu
+                        variant="secondary btn-sm"
+                        id="dropdown-basic"
+                      >
                         {patientList &&
                           patientList.map((patient, index) => (
                             <Dropdown.Item
@@ -218,34 +276,38 @@ function MedicalStaff() {
                       }}
                     />
                   </div>
-
-                  <div className="form-group col-md-6">
-                    <label htmlFor="inputName4">Update Number:</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => {
-                        setUpdateNum(e.target.value);
-                      }}
-                    />
-                  </div>
                 </div>
               </form>
 
               <br />
               <br />
               <div className="d-flex justify-content-center">
-                <Button className="btn btn-success btn-sm mr-3" onClick={GetMedicalStaff}>
+                {/* <Button
+                  className="btn btn-success btn-sm mr-3"
+                  onClick={() => {
+                    addCountRequest("postMedicalStaff");
+                  }}
+                >
+                  AddCount
+                </Button>
+                <Button
+                  className="btn btn-success btn-sm mr-3"
+                  onClick={insertUserId}
+                >
+                  createadmin
+                </Button> */}
+
+                <Button
+                  className="btn btn-success btn-sm mr-3"
+                  onClick={GetMedicalStaff}
+                >
                   View Schedule
                 </Button>
-                <Button className="btn btn-primary btn-sm mr-3" onClick={RegisterRequest}>
+                <Button
+                  className="btn btn-primary btn-sm mr-3"
+                  onClick={RegisterRequest}
+                >
                   Add Schedule
-                </Button>
-                <Button className="btn btn-secondary btn-sm mr-3" onClick={UpdateMedicalStaff}>
-                  Update Schedule
-                </Button>
-                <Button className="btn btn-info btn-sm mr-3" onClick={DeleteMedicalStaff}>
-                  Delete Schedule
                 </Button>
               </div>
             </div>
@@ -271,19 +333,41 @@ function MedicalStaff() {
                       Ed Date
                     </th>
                     <th scope="col"># Patient</th>
+                    <th></th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  {list.map((li) => (
+                  {list.map((li, index) => (
                     <>
-                      <tr>
+                      <tr key={index}>
                         <td>{li.Id}</td>
                         <td>{li.name}</td>
                         <td>{li.position}</td>
                         <td>{li.start_at}</td>
                         <td>{li.end_at}</td>
+
                         <td style={{ textAlign: "center" }}>{li.patientID}</td>
+                        <Button
+                          className="btn btn-secondary btn-sm mr-3"
+                          onClick={() => {
+                            UpdateMedicalStaff(
+                              li.Id,
+                              li.start_at,
+                              li.patientID
+                            );
+                          }}
+                        >
+                          Update
+                        </Button>
+                        <Button
+                          className="btn btn-info btn-sm mr-3"
+                          onClick={() => {
+                            DeleteMedicalStaff(li.patientID, li.Id);
+                          }}
+                        >
+                          Delete
+                        </Button>
                       </tr>
                     </>
                   ))}

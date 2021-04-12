@@ -8,6 +8,7 @@ import Register from "./Register";
 import LogIn from "./LogIn";
 import Home from "./Home";
 import PatientList from "./PatientList";
+import Admin from "./Admin";
 function App() {
   Axios.defaults.withCredentials = true;
 
@@ -29,6 +30,7 @@ function App() {
         <Route path="/LogIn" component={LogIn} exact />
         <Route path="/" component={Home} exact />
         <Route path="/PatientList" component={PatientList} exact />
+        <Route path="/Admin" component={Admin} exact />
       </Router>
       <div className="App"></div>
     </>
