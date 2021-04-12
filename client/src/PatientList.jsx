@@ -70,6 +70,7 @@ function PatientList() {
           },
         ]);
       });
+      getPatient();
       // window.location.reload(false);
     }
   };
@@ -111,6 +112,7 @@ function PatientList() {
               : val;
           })
         );
+        getPatient();
         // window.location.reload(false);
       });
     }
