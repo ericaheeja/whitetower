@@ -66,7 +66,7 @@ function MedicalStaff() {
   //   });
   // };
 
-  const RegisterRequest = () => {
+  const RegisterRequest = async () => {
     console.log(startTime.split(" ")[1]);
     console.log(endDate + " " + endTime);
 
@@ -85,18 +85,18 @@ function MedicalStaff() {
       alert("This patient already has been scheduled  ");
     } else {
       addCountRequest("updateReserved");
-      Axios.put(endPoint + "updateReserved/", {
+      await Axios.put(endPoint + "updateReserved/", {
         patientID: patientID,
         name: name,
         position: position,
         startTime: startTime,
         endDate: endDate,
         endTime: endTime,
-      }).then((response) => {
+      }).then(async (response) => {
         // console.log(response);
         // console.log("line55");
         addCountRequest("postMedicalStaff");
-        Axios.post(endPoint + "post/medicalStaff/", {
+        await Axios.post(endPoint + "post/medicalStaff/", {
           name: name,
           position: position,
           startTime: startTime,
@@ -105,7 +105,8 @@ function MedicalStaff() {
           patientID: patientID,
         }).then((response) => {
           console.log(response);
-          GetMedicalStaff();
+          // GetMedicalStaff();
+          window.location.reload(false);
         });
         // window.location.reload(false);
       });
@@ -155,23 +156,23 @@ function MedicalStaff() {
     });
   };
 
-  const DeleteMedicalStaff = (patientID, updateNum) => {
+  const DeleteMedicalStaff = async (patientID, updateNum) => {
     // console.log("line107");
     addCountRequest("updateNotReserved");
-    Axios.put(endPoint + "updateNotReserved/", {
+    await Axios.put(endPoint + "updateNotReserved/", {
       patientID: patientID,
-    }).then((response) => {
+    }).then(async (response) => {
       // console.log(response);
       // console.log("line 108 delete");
       addCountRequest("deletePati");
-      Axios.delete(endPoint + "delete/medicalStaff/", {
+      await Axios.delete(endPoint + "delete/medicalStaff/", {
         data: {
           updateNum: updateNum,
         },
       }).then((response) => {
         console.log(response);
-        // window.location.reload(false);
-        GetMedicalStaff();
+        window.location.reload(false);
+        // GetMedicalStaff();
       });
     });
   };
@@ -218,18 +219,12 @@ function MedicalStaff() {
                     <Dropdown>
                       <span>Select patient: </span>
 
-                      <Dropdown.Toggle
-                        variant="success btn-sm"
-                        id="dropdown-basic"
-                      >
+                      <Dropdown.Toggle variant="success btn-sm" id="dropdown-basic">
                         Patient Id
                       </Dropdown.Toggle>
                       <br />
 
-                      <Dropdown.Menu
-                        variant="secondary btn-sm"
-                        id="dropdown-basic"
-                      >
+                      <Dropdown.Menu variant="secondary btn-sm" id="dropdown-basic">
                         {patientList &&
                           patientList.map((patient, index) => (
                             <Dropdown.Item
@@ -297,16 +292,10 @@ function MedicalStaff() {
                   createadmin
                 </Button> */}
 
-                <Button
-                  className="btn btn-success btn-sm mr-3"
-                  onClick={GetMedicalStaff}
-                >
+                <Button className="btn btn-success btn-sm mr-3" onClick={GetMedicalStaff}>
                   View Schedule
                 </Button>
-                <Button
-                  className="btn btn-primary btn-sm mr-3"
-                  onClick={RegisterRequest}
-                >
+                <Button className="btn btn-primary btn-sm mr-3" onClick={RegisterRequest}>
                   Add Schedule
                 </Button>
               </div>
@@ -351,11 +340,7 @@ function MedicalStaff() {
                         <Button
                           className="btn btn-secondary btn-sm mr-3"
                           onClick={() => {
-                            UpdateMedicalStaff(
-                              li.Id,
-                              li.start_at,
-                              li.patientID
-                            );
+                            UpdateMedicalStaff(li.Id, li.start_at, li.patientID);
                           }}
                         >
                           Update
