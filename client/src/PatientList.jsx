@@ -38,7 +38,7 @@ function PatientList() {
     });
   };
 
-  const addPatient = () => {
+  const addPatient = async () => {
     if (
       name === "" ||
       city === "" ||
@@ -50,15 +50,15 @@ function PatientList() {
       alert("Please fill in!");
     } else {
       addCountRequest("createPatient");
-      Axios.post(endPoint + "createPatient", {
+      await Axios.post(endPoint + "createPatient", {
         name: name,
         city: city,
         mobile: mobile,
         gender: gender,
         date: date,
         time: time,
-      }).then(() => {
-        setPatientList([
+      }).then(async () => {
+        await setPatientList([
           ...patientList,
           {
             name: name,
@@ -70,12 +70,12 @@ function PatientList() {
           },
         ]);
       });
-      getPatient();
-      // window.location.reload(false);
+      // getPatient();
+      window.location.reload(false);
     }
   };
 
-  const editPatientName = (ID) => {
+  const editPatientName = async (ID) => {
     if (
       newName === "" ||
       newCity === "" ||
@@ -87,7 +87,7 @@ function PatientList() {
       alert("Please fill in!");
     } else {
       addCountRequest("updatePatient");
-      Axios.put(endPoint + "updatePatient/", {
+      await Axios.put(endPoint + "updatePatient/", {
         name: newName,
         city: newCity,
         mobile: newMobile,
@@ -95,8 +95,8 @@ function PatientList() {
         date: newDate,
         time: newTime,
         ID: ID,
-      }).then((response) => {
-        setPatientList(
+      }).then(async (response) => {
+        await setPatientList(
           patientList.map((val) => {
             console.log(val);
             return val.ID === ID
@@ -112,8 +112,8 @@ function PatientList() {
               : val;
           })
         );
-        getPatient();
-        // window.location.reload(false);
+        // getPatient();
+        window.location.reload(false);
       });
     }
   };
