@@ -179,6 +179,7 @@ function MedicalStaff() {
             <h3>Create Schedule</h3>
           </div>
           <div className="row">
+            <div className="column"></div>
             <div className="column">
               <div className="d-flex justify-content-center">
                 <div className="createSchedule">
@@ -311,6 +312,7 @@ function MedicalStaff() {
                   </div>
                 </div>
               </div>
+              <div className="column"></div>
             </div>
 
             <div className="d-flex justify-content-center">
