@@ -163,8 +163,8 @@ function MedicalStaff() {
         },
       }).then((response) => {
         console.log(response);
-        reloadPage();
       });
+      reloadPage();
     });
   };
 
