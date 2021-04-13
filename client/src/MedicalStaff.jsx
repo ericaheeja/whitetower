@@ -314,64 +314,63 @@ function MedicalStaff() {
               </div>
               <div className="column"></div>
             </div>
-
-            <div className="d-flex justify-content-center">
-              <div className="schedule">
-                <div>{list.position}</div>
-                <div className="d-flex justify-content-center">
-                  <h3>Schedule list</h3>
-                </div>
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Name</th>
-                      <th scope="col" style={{ textAlign: "center" }}>
-                        Po
-                      </th>
-                      <th scope="col" style={{ textAlign: "center" }}>
-                        ST Date
-                      </th>
-                      <th scope="col" style={{ textAlign: "center" }}>
-                        Ed Date
-                      </th>
-                      <th scope="col"># Patient</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {list.map((li, index) => (
-                      <>
-                        <tr key={index}>
-                          <td>{li.Id}</td>
-                          <td>{li.name}</td>
-                          <td>{li.position}</td>
-                          <td>{li.start_at}</td>
-                          <td>{li.end_at}</td>
-                          <td style={{ textAlign: "center" }}>{li.patientID}</td>
-                          <Button
-                            className="btn btn-secondary btn-sm mr-3 mt-2"
-                            onClick={() => {
-                              UpdateMedicalStaff(li.Id, li.start_at, li.patientID);
-                            }}
-                          >
-                            Update
-                          </Button>
-                          <Button
-                            className="btn btn-info btn-sm mr-3 mt-2"
-                            onClick={() => {
-                              DeleteMedicalStaff(li.patientID, li.Id);
-                            }}
-                          >
-                            Delete
-                          </Button>
-                        </tr>
-                      </>
-                    ))}
-                  </tbody>
-                </table>
+          </div>
+          <div className="d-flex justify-content-center">
+            <div className="schedule">
+              <div>{list.position}</div>
+              <div className="d-flex justify-content-center">
+                <h3>Schedule list</h3>
               </div>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col" style={{ textAlign: "center" }}>
+                      Po
+                    </th>
+                    <th scope="col" style={{ textAlign: "center" }}>
+                      ST Date
+                    </th>
+                    <th scope="col" style={{ textAlign: "center" }}>
+                      Ed Date
+                    </th>
+                    <th scope="col"># Patient</th>
+                    <th></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {list.map((li, index) => (
+                    <>
+                      <tr key={index}>
+                        <td>{li.Id}</td>
+                        <td>{li.name}</td>
+                        <td>{li.position}</td>
+                        <td>{li.start_at}</td>
+                        <td>{li.end_at}</td>
+                        <td style={{ textAlign: "center" }}>{li.patientID}</td>
+                        <Button
+                          className="btn btn-secondary btn-sm mr-3 mt-2"
+                          onClick={() => {
+                            UpdateMedicalStaff(li.Id, li.start_at, li.patientID);
+                          }}
+                        >
+                          Update
+                        </Button>
+                        <Button
+                          className="btn btn-info btn-sm mr-3 mt-2"
+                          onClick={() => {
+                            DeleteMedicalStaff(li.patientID, li.Id);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </tr>
+                    </>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </>
