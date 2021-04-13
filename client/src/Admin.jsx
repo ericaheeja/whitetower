@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Axios from "axios";
+import "./css/Admin.css";
+
 function Admin() {
   // const [serverRequestList, setServerRequestList] = useState({});
   const [postMedicalStaff, setPostMedicalStaff] = useState("");
