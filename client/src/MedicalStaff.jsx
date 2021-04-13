@@ -36,7 +36,6 @@ function MedicalStaff() {
     // getUserEmail();
     // insertUserId();
   }, []);
-
   const reloadPage = () => {
     setTimeout(() => {
       window.location.reload(false);
@@ -114,7 +113,7 @@ function MedicalStaff() {
     } else if (startTime > endDate + " " + endTime) {
       alert("Your end time is forward than your start time");
     } else if (patientState === 1) {
-      alert("This patient already has been scheduled");
+      alert("This patient already has been scheduled  ");
     } else {
       addCountRequest("putMedicalStaff");
       Axios.put(endPoint + "put/medicalStaff/", {
@@ -157,16 +156,15 @@ function MedicalStaff() {
     }).then((response) => {
       // console.log(response);
       // console.log("line 108 delete");
-      addCountRequest("deletePati");
+      addCountRequest("deleteMedicalStaff");
       Axios.delete(endPoint + "delete/medicalStaff/", {
         data: {
           updateNum: updateNum,
         },
       }).then((response) => {
         console.log(response);
-        // window.location.reload(false);
+        reloadPage();
       });
-      reloadPage();
     });
   };
 
@@ -180,9 +178,9 @@ function MedicalStaff() {
           </div>
           <div className="row">
             <div className="column"></div>
-            <div className="column">
+            <div className="column ">
               <div className="d-flex justify-content-center">
-                <div className="createSchedule">
+                <div className="createScehdule">
                   <form className="d-flex justify-content-center ">
                     <div className="form-row w-100 mx-3">
                       <div className="form-group col-md-6">
@@ -312,9 +310,11 @@ function MedicalStaff() {
                   </div>
                 </div>
               </div>
-              <div className="column"></div>
             </div>
+
+            <div className="column"></div>
           </div>
+
           <div className="d-flex justify-content-center">
             <div className="schedule">
               <div>{list.position}</div>
